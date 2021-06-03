@@ -1,0 +1,4 @@
+github.com/Arafatk/glot v0.0.0-20180312013246-79d5219000f0 h1:buG0FAUZtOwl9c+RdnQo3cfZhTnY2OY24J3t+jpeb9Y=
+github.com/Arafatk/glot v0.0.0-20180312013246-79d5219000f0/go.mod h1:o0O8gFiTfVp4g5QcQJ1iMLw6ROiy9BITaiBbEiwz9h8=
+golang.org/x/exp/errors v0.0.0-20210526181343-b47a03e3048a h1:8uGhzVafpFGnGvQb4hyt9DrknNScZsaAm17CrSi89io=
+golang.org/x/exp/errors v0.0.0-20210526181343-b47a03e3048a/go.mod h1:YgqsNsAu4fTvlab/7uiYK9LJrCIzKg/NiZUIH1/ayqo=
