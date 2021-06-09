@@ -8,7 +8,10 @@ import (
 	"github.com/jn-lp/scheduler"
 )
 
-const tasksCount = 10
+const (
+	tasksCount = 10
+	coresCount = 2
+)
 
 func main() {
 	tasks := prepareTasks(tasksCount)
@@ -46,7 +49,7 @@ func main() {
 			tmp[i] = &v
 		}
 
-		report := constructor(tmp).Start()
+		report := constructor(tmp).Start(coresCount)
 
 		if err = QueueSizes.AddPointGroup(name, "lines", report.QueueSizes); err != nil {
 			log.Fatal(err)
@@ -77,10 +80,11 @@ func prepareTasks(n int) []scheduler.Task {
 		maxDeadline := 10
 
 		tasks = append(tasks, scheduler.Task{
-			Start:    start,
-			Wcet:     1 + rand.Intn(1),
-			Priority: rand.Intn(maxPriority),
-			Deadline: start + 1 + rand.Intn(maxDeadline),
+			Start:     start,
+			Wcet:      1 + rand.Intn(1),
+			Priority:  rand.Intn(maxPriority),
+			Deadline:  start + 1 + rand.Intn(maxDeadline),
+			Protected: rand.Float32() > 0.5,
 		})
 	}
 

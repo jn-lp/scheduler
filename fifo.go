@@ -9,7 +9,7 @@ func NewFIFO(tasks []*Task) Scheduler {
 	return &FIFO{scheduler: newScheduler(tasks)}
 }
 
-func (f *FIFO) Start() *Report {
+func (f *FIFO) Start(cores int) *Report {
 	return f.scheduler.Start(func() *Task {
 		if _, ok := f.Queue[f.current]; !ok {
 			var cur *Task
@@ -22,5 +22,5 @@ func (f *FIFO) Start() *Report {
 		}
 
 		return f.current
-	})
+	}, cores)
 }

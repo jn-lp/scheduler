@@ -9,7 +9,7 @@ func NewRM(tasks []*Task) Scheduler {
 	return &RM{scheduler: newScheduler(tasks)}
 }
 
-func (rm *RM) Start() *Report {
+func (rm *RM) Start(cores int) *Report {
 	return rm.scheduler.Start(func() *Task {
 		if _, ok := rm.Queue[rm.current]; !ok {
 			var max int
@@ -21,5 +21,5 @@ func (rm *RM) Start() *Report {
 		}
 
 		return rm.current
-	})
+	}, cores)
 }

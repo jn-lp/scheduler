@@ -9,7 +9,7 @@ func NewEDF(tasks []*Task) Scheduler {
 	return &EDF{scheduler: newScheduler(tasks)}
 }
 
-func (e *EDF) Start() *Report {
+func (e *EDF) Start(cores int) *Report {
 	return e.scheduler.Start(func() *Task {
 		if _, ok := e.Queue[e.current]; !ok {
 			var max int
@@ -21,5 +21,5 @@ func (e *EDF) Start() *Report {
 		}
 
 		return e.current
-	})
+	}, cores)
 }

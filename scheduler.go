@@ -1,7 +1,7 @@
 package scheduler
 
 type Scheduler interface {
-	Start() *Report
+	Start(cores int) *Report
 }
 
 type Constructor func([]*Task) Scheduler
@@ -19,13 +19,16 @@ func newScheduler(tasks []*Task) *scheduler {
 	}
 }
 
-func (s *scheduler) Start(nextTask func() *Task) *Report {
-	var qs, wt []int
+func (s *scheduler) Start(nextTask func() *Task, cores int) *Report {
+	var (
+		qs, wt []int
+		task   *Task
+	)
 
 	for dones := 0; dones < len(s.Tasks); s.Time++ {
-		for _, task := range s.Tasks {
-			if task.Start == s.Time {
-				s.Queue[task] = nil
+		for _, t := range s.Tasks {
+			if t.Start == s.Time {
+				s.Queue[t] = nil
 			}
 		}
 
@@ -35,8 +38,10 @@ func (s *scheduler) Start(nextTask func() *Task) *Report {
 			qs = append(qs, l)
 		}
 
-		task := nextTask()
-		task.Progress++
+		if task == nil || !task.Protected {
+			task = nextTask()
+		}
+		task.Progress += cores
 
 		if task.Done() || task.Deadline == s.Time {
 			wt = append(wt, s.Time-task.Start)
